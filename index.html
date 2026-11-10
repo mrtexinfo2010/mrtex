@@ -68,9 +68,14 @@
             </select>
           </div>
 
+          <!-- File Upload Field -->
           <div class="input-group">
-            <label>Image URL (Photo Link) *</label>
-            <input type="text" id="formImage" required placeholder="Paste image link here...">
+            <label>Select Product Photo *</label>
+            <input type="file" id="formImageFile" accept="image/png, image/jpeg, image/jpg">
+            <div id="imagePreviewContainer" class="image-preview-box hidden">
+              <img id="imagePreview" src="" alt="Selected Preview">
+              <span>Current Image Preview</span>
+            </div>
           </div>
 
           <div class="input-group">
