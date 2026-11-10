@@ -1,27 +1,27 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('uploadForm');
+  const cards = document.querySelectorAll('.product-card');
+  const quoteButtons = document.querySelectorAll('.quote-btn');
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
+  // Touch device animation handler (Mobile & Tablet)
+  cards.forEach(card => {
+    card.addEventListener('touchstart', () => {
+      card.classList.add('touch-active');
+    });
 
-    // Field Values
-    const productName = document.getElementById('productName').value;
-    const category = document.getElementById('category').value;
-    const price = document.getElementById('price').value;
-    const imageInput = document.getElementById('productImage');
-    const specifications = document.getElementById('specifications').value;
+    card.addEventListener('touchend', () => {
+      setTimeout(() => {
+        card.classList.remove('touch-active');
+      }, 300);
+    });
+  });
 
-    if (!imageInput.files || imageInput.files.length === 0) {
-      alert('Please select an image file!');
-      return;
-    }
-
-    const fileName = imageInput.files[0].name;
-
-    // Success Action Example
-    alert(`Success! Product Published:\n\nName: ${productName}\nCategory: ${category}\nPrice: ${price}\nImage File: ${fileName}`);
-    
-    // Reset Form after Submission
-    form.reset();
+  // Quote Button Interaction
+  quoteButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.stopPropagation(); // Prevents triggering parent card events
+      const productName = button.getAttribute('data-product');
+      
+      alert(`M.R.TEX Inquiry:\n\nThank you for choosing "${productName}".\nPlease contact M.R.TEX sales & technical support team for detailed price quotes and availability.`);
+    });
   });
 });
