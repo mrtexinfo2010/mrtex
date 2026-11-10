@@ -1,54 +1,158 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Upload Product - M.R.TEX</title>
+  <title>M.R.TEX - Industrial Textile Machinery & Accessories Catalog</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="form-container">
-    <h2>Upload Product</h2>
-    <p class="subtitle">Add new machinery photos and technical details to your live catalog</p>
+  <!-- Header / Navigation -->
+  <header class="navbar">
+    <div class="logo">M.R.TEX</div>
+    <nav class="nav-links">
+      <a href="#machines">Machinery</a>
+      <a href="#accessories">Accessories</a>
+      <a href="#contact">Contact Us</a>
+    </nav>
+  </header>
 
-    <form id="uploadForm">
+  <!-- Hero Banner -->
+  <section class="hero-section">
+    <h1>M.R.TEX Machinery & Accessories Catalog</h1>
+    <p>Complete Industrial Textile Machinery & High-Precision Replacement Components</p>
+  </section>
+
+  <!-- Container -->
+  <main class="main-container">
+
+    <!-- Textile Machinery Catalog -->
+    <section id="machines" class="catalog-section">
+      <h2 class="section-title">Textile Machinery Range</h2>
       
-      <div class="form-group">
-        <label for="productName">Product Name *</label>
-        <input type="text" id="productName" placeholder="e.g., High Speed Single Jersey Machine" required>
+      <div class="product-grid">
+        
+        <!-- Machine 1 -->
+        <article class="product-card">
+          <div class="image-box">
+            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80" alt="High Speed Single Jersey Machine">
+          </div>
+          <div class="product-details">
+            <span class="badge">Machinery</span>
+            <h3 class="product-name">High Speed Single Jersey Machine</h3>
+            <p class="description">Premium circular knitting machine engineered for maximum output, structural stability, and smooth fabric production.</p>
+            
+            <div class="specs-table">
+              <h4>A to Z Technical Specifications:</h4>
+              <ul>
+                <li><strong>Cylinder Diameter:</strong> 30" – 34"</li>
+                <li><strong>Gauge (G):</strong> 24G – 34G</li>
+                <li><strong>Feeders Count:</strong> 90F – 102F</li>
+                <li><strong>Operating Speed:</strong> Up to 35 RPM</li>
+                <li><strong>Drive Motor:</strong> Inverter Controlled Motor</li>
+              </ul>
+            </div>
+
+            <button class="quote-btn" data-product="High Speed Single Jersey Machine">Get Quote / Inquire</button>
+          </div>
+        </article>
+
+        <!-- Machine 2 -->
+        <article class="product-card">
+          <div class="image-box">
+            <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80" alt="Auto Stripe Machine">
+          </div>
+          <div class="product-details">
+            <span class="badge">Machinery</span>
+            <h3 class="product-name">Computerized Auto Stripe Machine</h3>
+            <p class="description">Advanced stripe knitting system equipped with smart selection mechanism for complex color pattern execution.</p>
+            
+            <div class="specs-table">
+              <h4>A to Z Technical Specifications:</h4>
+              <ul>
+                <li><strong>Feeder Selection:</strong> 4-Color / 6-Color Auto Striper</li>
+                <li><strong>Needle Type:</strong> Precision Latch Needles</li>
+                <li><strong>Cylinder Type:</strong> Interlock / Rib Convertible</li>
+                <li><strong>Control Unit:</strong> Touch Screen Computer Interface</li>
+                <li><strong>Lubrication:</strong> Automatic Oil Injection System</li>
+              </ul>
+            </div>
+
+            <button class="quote-btn" data-product="Computerized Auto Stripe Machine">Get Quote / Inquire</button>
+          </div>
+        </article>
+
       </div>
+    </section>
 
-      <div class="form-group">
-        <label for="category">Category *</label>
-        <select id="category" required>
-          <option value="" disabled selected>Select Category</option>
-          <option value="Single Jersey">Single Jersey</option>
-          <option value="Double Jersey">Double Jersey</option>
-          <option value="Auto Stripe">Auto Stripe</option>
-          <option value="Accessories">Accessories & Spare Parts</option>
-        </select>
+    <!-- Accessories & Spare Parts Catalog -->
+    <section id="accessories" class="catalog-section">
+      <h2 class="section-title">Accessories & Spare Parts</h2>
+      
+      <div class="product-grid">
+
+        <!-- Accessory 1 -->
+        <article class="product-card">
+          <div class="image-box">
+            <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80" alt="Industrial Timing Belts">
+          </div>
+          <div class="product-details">
+            <span class="badge accessory-badge">Spare Component</span>
+            <h3 class="product-name">Industrial Timing Belts</h3>
+            <p class="description">Heavy-duty drive belts constructed with oil and heat resistant synthetic rubber for zero slip operation.</p>
+            
+            <div class="specs-table">
+              <h4>A to Z Technical Specifications:</h4>
+              <ul>
+                <li><strong>Material:</strong> Polyurethane with Steel / Kevlar Cord</li>
+                <li><strong>Pitch Type:</strong> T5, T10, AT10, HTD Series</li>
+                <li><strong>Tensile Resistance:</strong> Ultra-High Torque Capacity</li>
+                <li><strong>Application:</strong> Knitting Machine Main Drive & Feeders</li>
+              </ul>
+            </div>
+
+            <button class="quote-btn" data-product="Industrial Timing Belts">Get Quote / Inquire</button>
+          </div>
+        </article>
+
+        <!-- Accessory 2 -->
+        <article class="product-card">
+          <div class="image-box">
+            <img src="https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=600&q=80" alt="Yarn Feeders and Rollers">
+          </div>
+          <div class="product-details">
+            <span class="badge accessory-badge">Spare Component</span>
+            <h3 class="product-name">Positive Yarn Feeders & Rollers</h3>
+            <p class="description">Precision-balanced feeding units designed to prevent yarn breakage and maintain constant yarn tension.</p>
+            
+            <div class="specs-table">
+              <h4>A to Z Technical Specifications:</h4>
+              <ul>
+                <li><strong>Voltage:</strong> 24V DC Smart Drive System</li>
+                <li><strong>Spool Shaft:</strong> Hard Anodized Aluminum Wheel</li>
+                <li><strong>Tension Adjustment:</strong> Micro-Adjustable Dial</li>
+                <li><strong>Yarn Compatibility:</strong> Cotton, Polyester, Blends & Lycra</li>
+              </ul>
+            </div>
+
+            <button class="quote-btn" data-product="Positive Yarn Feeders & Rollers">Get Quote / Inquire</button>
+          </div>
+        </article>
+
       </div>
+    </section>
 
-      <div class="form-group">
-        <label for="price">Price / Quote *</label>
-        <input type="text" id="price" placeholder="e.g., Contact for Quote / $15,000" required>
-      </div>
+  </main>
 
-      <div class="form-group">
-        <label for="productImage">Upload Image (JPG/PNG) *</label>
-        <input type="file" id="productImage" accept="image/png, image/jpeg" required>
-      </div>
-
-      <div class="form-group">
-        <label for="specifications">Specifications / Description *</label>
-        <textarea id="specifications" rows="4" placeholder="Gauge, Diameter, Feeders count, Speed RPM details..." required></textarea>
-      </div>
-
-      <button type="submit" class="submit-btn">Publish Product</button>
-
-    </form>
-  </div>
+  <!-- Footer -->
+  <footer id="contact" class="footer">
+    <div class="footer-content">
+      <h3>M.R.TEX</h3>
+      <p>Industrial Textile Machinery & Replacement Components Supplier</p>
+      <p class="copyright">&copy; 2026 M.R.TEX. All Rights Reserved.</p>
+    </div>
+  </footer>
 
   <script src="script.js"></script>
 </body>
