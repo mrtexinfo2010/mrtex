@@ -83,23 +83,40 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
   });
 });
 
+// File Upload Logic using FileReader
 document.getElementById('productForm').addEventListener('submit', (e) => {
   e.preventDefault();
-  const newItem = {
-    id: Date.now(),
-    name: document.getElementById('pName').value,
-    category: document.getElementById('pCategory').value,
-    price: document.getElementById('pPrice').value,
-    image: document.getElementById('pImage').value,
-    desc: document.getElementById('pDesc').value
+  
+  const fileInput = document.getElementById('pImageFile');
+  const file = fileInput.files[0];
+
+  if (!file) {
+    alert('Please select an image file!');
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    const imageDataUrl = event.target.result;
+
+    const newItem = {
+      id: Date.now(),
+      name: document.getElementById('pName').value,
+      category: document.getElementById('pCategory').value,
+      price: document.getElementById('pPrice').value,
+      image: imageDataUrl,
+      desc: document.getElementById('pDesc').value
+    };
+
+    const list = fetchProducts();
+    list.unshift(newItem);
+    saveProducts(list);
+    displayProducts();
+    e.target.reset();
+    alert('Product image and details uploaded successfully!');
   };
 
-  const list = fetchProducts();
-  list.unshift(newItem);
-  saveProducts(list);
-  displayProducts();
-  e.target.reset();
-  alert('New product successfully added to your site!');
+  reader.readAsDataURL(file);
 });
 
 function showModal(id) {
