@@ -1,77 +1,72 @@
-// Initial Product Data
-const initialProducts = [
+const defaultProducts = [
   {
     id: 1,
     name: "Single Jersey Circular Knitting Machine",
-    category: "machines",
-    price: "Contact for Pricing",
+    category: "single-jersey",
+    price: "Inquire for Pricing",
     image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80",
-    desc: "High-speed single jersey circular knitting machine. Suitable for high output cotton and synthetic fabric production."
+    desc: "High speed 30 inch / 24G single jersey machine for cotton, polyester, and elastane knitted fabric production."
   },
   {
+    category: "double-jersey",
     id: 2,
-    name: "Positive Feeder (MPF / Memminger type)",
-    category: "feeders",
-    price: "$85 / Piece",
+    name: "Double Jersey Interlock Machinery",
+    price: "Inquire for Specs",
     image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80",
-    desc: "Precision yarn storage and delivery feeder for smooth knitting without yarn breakage."
+    desc: "Precision double jersey machine for rib and interlock structure knitting with low energy consumption."
   },
   {
     id: 3,
     name: "Groz-Beckert Needles & Sinkers Set",
     category: "spare-parts",
-    price: "Inquire Specs",
+    price: "In Stock / Wholesale",
     image: "https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=600&q=80",
-    desc: "Premium quality industrial knitting needles and sinkers for double jersey & single jersey machines."
+    desc: "Original imported needles and sinkers for double and single jersey circular knitting machinery."
   },
   {
     id: 4,
-    name: "Industrial Toothed Timing Belt",
-    category: "belts",
-    price: "$25 / Meter",
+    name: "Memminger Type Positive Feeder",
+    category: "spare-parts",
+    price: "Inquire Price",
     image: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=600&q=80",
-    desc: "High durability synchronizing belt for feeder drive and cylinder main drive components."
+    desc: "Smooth yarn tension feeder designed to reduce yarn breakages during continuous factory operations."
   }
 ];
 
-// Load Products from LocalStorage or Default
-function getProducts() {
-  const stored = localStorage.getItem('mrtex_products');
-  return stored ? JSON.parse(stored) : initialProducts;
+function fetchProducts() {
+  const data = localStorage.getItem('mrtex_items');
+  return data ? JSON.parse(data) : defaultProducts;
 }
 
-function saveProducts(products) {
-  localStorage.setItem('mrtex_products', JSON.stringify(products));
+function saveProducts(items) {
+  localStorage.setItem('mrtex_items', JSON.stringify(items));
 }
 
-// Render Products to Page
-function renderProducts(categoryFilter = 'all') {
-  const container = document.getElementById('productContainer');
-  const products = getProducts();
+function displayProducts(filter = 'all') {
+  const container = document.getElementById('productGrid');
+  const items = fetchProducts();
   container.innerHTML = '';
 
-  const filtered = categoryFilter === 'all' 
-    ? products 
-    : products.filter(p => p.category === categoryFilter);
+  const filtered = filter === 'all' ? items : items.filter(i => i.category === filter);
 
-  if (filtered.length === 0) {
-    container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #6c757d;">No products found in this category.</p>`;
+  if (!filtered.length) {
+    container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #666;">No machines found in this section.</p>`;
     return;
   }
 
-  filtered.forEach(product => {
+  filtered.forEach(item => {
     const card = document.createElement('div');
     card.className = 'product-card';
     card.innerHTML = `
-      <img src="${product.image}" alt="${product.name}" class="product-img" onerror="this.src='https://via.placeholder.com/400x250?text=M.R.+TEX+Product'">
-      <div class="product-info">
-        <span class="product-category">${product.category.replace('-', ' ')}</span>
-        <h3 class="product-title">${product.name}</h3>
-        <p class="product-price">${product.price}</p>
-        <div class="product-actions">
-          <button class="btn btn-outline" style="border-color: #0077b6; color: #0077b6;" onclick="openModal(${product.id})">Details</button>
-          <a href="https://wa.me/8801700000000?text=Hi%20M.R.%20TEX,%20I%20am%20interested%20in%20${encodeURIComponent(product.name)}" class="btn btn-whatsapp" target="_blank">
-            <i class="fab fa-whatsapp"></i> Buy/Ask
+      <img src="${item.image}" alt="${item.name}" class="product-img" onerror="this.src='https://via.placeholder.com/400x250?text=M.R.+TEX'">
+      <div class="product-body">
+        <span class="product-cat">${item.category.replace('-', ' ')}</span>
+        <h3 class="product-title">${item.name}</h3>
+        <p class="product-price">${item.price}</p>
+        <div class="card-actions">
+          <button class="btn btn-primary" onclick="showModal(${item.id})">Details</button>
+          <a href="https://wa.me/8801911677701?text=Hi%20M.R.%20TEX,%20I%20am%20interested%20in%20${encodeURIComponent(item.name)}" class="btn btn-wa" target="_blank">
+            <i class="fab fa-whatsapp"></i> Buy
           </a>
         </div>
       </div>
@@ -80,70 +75,67 @@ function renderProducts(categoryFilter = 'all') {
   });
 }
 
-// Category Filtering Setup
-document.querySelectorAll('.filter-btn').forEach(button => {
-  button.addEventListener('click', (e) => {
-    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     e.target.classList.add('active');
-    renderProducts(e.target.dataset.category);
+    displayProducts(e.target.dataset.category);
   });
 });
 
-// Upload New Product Form Handler
-document.getElementById('uploadForm').addEventListener('submit', (e) => {
+document.getElementById('productForm').addEventListener('submit', (e) => {
   e.preventDefault();
-  
-  const newProduct = {
+  const newItem = {
     id: Date.now(),
     name: document.getElementById('pName').value,
     category: document.getElementById('pCategory').value,
-    price: document.getElementById('pPrice').value || "Contact for Price",
+    price: document.getElementById('pPrice').value,
     image: document.getElementById('pImage').value,
     desc: document.getElementById('pDesc').value
   };
 
-  const products = getProducts();
-  products.unshift(newProduct);
-  saveProducts(products);
-
-  renderProducts();
+  const list = fetchProducts();
+  list.unshift(newItem);
+  saveProducts(list);
+  displayProducts();
   e.target.reset();
-  alert('Product added successfully to catalogue!');
+  alert('New product successfully added to your site!');
 });
 
-// Modal View Handler
-function openModal(id) {
-  const products = getProducts();
-  const product = products.find(p => p.id === id);
-  if (!product) return;
+function showModal(id) {
+  const item = fetchProducts().find(p => p.id === id);
+  if (!item) return;
 
-  const modalBody = document.getElementById('modalBody');
-  modalBody.innerHTML = `
-    <h2 style="color: #0d3b66; margin-bottom: 10px;">${product.name}</h2>
-    <img src="${product.image}" style="width: 100%; max-height: 250px; object-fit: cover; border-radius: 5px; margin-bottom: 15px;" onerror="this.src='https://via.placeholder.com/400x250?text=M.R.+TEX'">
-    <p><strong>Category:</strong> ${product.category.toUpperCase()}</p>
-    <p><strong>Price / Terms:</strong> ${product.price}</p>
-    <p style="margin-top: 10px;"><strong>Description:</strong><br>${product.desc}</p>
+  const content = document.getElementById('modalContent');
+  content.innerHTML = `
+    <h2 style="color: #0b2545; margin-bottom: 10px;">${item.name}</h2>
+    <img src="${item.image}" style="width: 100%; height: 220px; object-fit: cover; border-radius: 4px; margin-bottom: 15px;" onerror="this.src='https://via.placeholder.com/400x250?text=M.R.+TEX'">
+    <p><strong>Category:</strong> ${item.category.toUpperCase()}</p>
+    <p><strong>Pricing:</strong> ${item.price}</p>
+    <p style="margin-top: 10px;"><strong>Specifications:</strong><br>${item.desc}</p>
     <div style="margin-top: 20px;">
-      <a href="https://wa.me/8801700000000?text=Hi%20M.R.%20TEX,%20I%20am%20interested%20in%20${encodeURIComponent(product.name)}" class="btn btn-whatsapp" target="_blank">
-        <i class="fab fa-whatsapp"></i> Order via WhatsApp
+      <a href="https://wa.me/8801911677701?text=Hi%20M.R.%20TEX,%20I%20need%20details%20for%20${encodeURIComponent(item.name)}" class="btn btn-wa" target="_blank">
+        <i class="fab fa-whatsapp"></i> Direct WhatsApp Inquiry
       </a>
     </div>
   `;
-
-  document.getElementById('productModal').style.display = 'flex';
+  document.getElementById('itemModal').style.display = 'flex';
 }
 
-document.querySelector('.close-btn').onclick = function() {
-  document.getElementById('productModal').style.display = 'none';
+document.querySelector('.modal-close').onclick = () => {
+  document.getElementById('itemModal').style.display = 'none';
 };
 
-window.onclick = function(event) {
-  const modal = document.getElementById('productModal');
-  if (event.target === modal) {
-    modal.style.display = 'none';
+window.onclick = (e) => {
+  if (e.target === document.getElementById('itemModal')) {
+    document.getElementById('itemModal').style.display = 'none';
   }
 };
 
-// Initial Execution on Load
-renderProducts();
+document.getElementById('inquiryForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  alert('Thank you for contacting M.R. TEX! We will respond shortly.');
+  e.target.reset();
+});
+
+displayProducts();
