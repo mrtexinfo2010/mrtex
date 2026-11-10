@@ -185,6 +185,33 @@ body {
   font-size: 0.95rem;
 }
 
+/* Image Preview Styling */
+.image-preview-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+  padding: 6px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+}
+
+.image-preview-box img {
+  width: 60px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.image-preview-box span {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.image-preview-box.hidden {
+  display: none;
+}
+
 .action-btn {
   width: 100%;
   background: #0284c7;
