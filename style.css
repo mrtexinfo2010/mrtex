@@ -1,28 +1,108 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const cards = document.querySelectorAll('.interactive-card');
+/* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-  // Mobile / Touch Devices for smooth animation effect
-  cards.forEach(card => {
-    // Touch start effect
-    card.addEventListener('touchstart', () => {
-      card.classList.add('active-touch');
-    });
+body {
+  background-color: #f1f5f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
 
-    // Touch end effect
-    card.addEventListener('touchend', () => {
-      setTimeout(() => {
-        card.classList.remove('active-touch');
-      }, 300);
-    });
+/* Card Container */
+.form-container {
+  background: #ffffff;
+  padding: 30px 35px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  max-width: 550px;
+  width: 100%;
+}
 
-    // Button click interaction placeholder
-    const button = card.querySelector('.btn');
-    if (button) {
-      button.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const itemName = card.querySelector('h3').innerText;
-        alert(`Thank you for your interest in: ${itemName}\nPlease contact M.R.TEX sales team for quotes.`);
-      });
-    }
-  });
-});
+.form-container h2 {
+  font-size: 1.8rem;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin-bottom: 24px;
+}
+
+/* Form Groups Layout */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+/* Input Fields & Controls */
+input[type="text"],
+select,
+textarea,
+input[type="file"] {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  color: #1e293b;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="text"]:focus,
+select:focus,
+textarea:focus {
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+
+textarea {
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* Customizing File Input */
+input[type="file"] {
+  background-color: #f8fafc;
+  cursor: pointer;
+}
+
+/* Submit Button */
+.submit-btn {
+  width: 100%;
+  background-color: #0284c7;
+  color: #ffffff;
+  border: none;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin-top: 10px;
+}
+
+.submit-btn:hover {
+  background-color: #0369a1;
+}
+
+.submit-btn:active {
+  transform: scale(0.98);
+}
