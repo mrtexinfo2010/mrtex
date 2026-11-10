@@ -1,158 +1,159 @@
-const defaultProducts = [
-  {
-    id: 1,
-    name: "Single Jersey Circular Knitting Machine",
-    category: "single-jersey",
-    price: "Inquire for Pricing",
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80",
-    desc: "High speed 30 inch / 24G single jersey machine for cotton, polyester, and elastane knitted fabric production."
-  },
-  {
-    id: 2,
-    name: "Double Jersey Interlock Machinery",
-    category: "double-jersey",
-    price: "Inquire for Specs",
-    image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80",
-    desc: "Precision double jersey machine for rib and interlock structure knitting with low energy consumption."
-  },
-  {
-    id: 3,
-    name: "Groz-Beckert Needles & Sinkers Set",
-    category: "spare-parts",
-    price: "In Stock / Wholesale",
-    image: "https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=600&q=80",
-    desc: "Original imported needles and sinkers for double and single jersey circular knitting machinery."
-  },
-  {
-    id: 4,
-    name: "Memminger Type Positive Feeder",
-    category: "spare-parts",
-    price: "Inquire Price",
-    image: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=600&q=80",
-    desc: "Smooth yarn tension feeder designed to reduce yarn breakages during continuous factory operations."
-  }
-];
-
-function fetchProducts() {
-  const data = localStorage.getItem('mrtex_items');
-  return data ? JSON.parse(data) : defaultProducts;
+/* Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-function saveProducts(items) {
-  localStorage.setItem('mrtex_items', JSON.stringify(items));
+body {
+  background-color: #f4f7f6;
+  color: #333;
 }
 
-function displayProducts(filter = 'all') {
-  const container = document.getElementById('productGrid');
-  const items = fetchProducts();
-  container.innerHTML = '';
-
-  const filtered = filter === 'all' ? items : items.filter(i => i.category === filter);
-
-  if (!filtered.length) {
-    container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #666;">No machines found in this section.</p>`;
-    return;
-  }
-
-  filtered.forEach(item => {
-    const card = document.createElement('div');
-    card.className = 'product-card';
-    card.innerHTML = `
-      <img src="${item.image}" alt="${item.name}" class="product-img" onerror="this.src='https://via.placeholder.com/400x250?text=M.R.+TEX'">
-      <div class="product-body">
-        <span class="product-cat">${item.category.replace('-', ' ')}</span>
-        <h3 class="product-title">${item.name}</h3>
-        <p class="product-price">${item.price}</p>
-        <div class="card-actions">
-          <button class="btn btn-primary" onclick="showModal(${item.id})">Details</button>
-          <a href="https://wa.me/8801911677701?text=Hi%20M.R.%20TEX,%20I%20am%20interested%20in%20${encodeURIComponent(item.name)}" class="btn btn-wa" target="_blank">
-            <i class="fab fa-whatsapp"></i> Buy
-          </a>
-        </div>
-      </div>
-    `;
-    container.appendChild(card);
-  });
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 8%;
+  background: #0f172a;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', (e) => {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    e.target.classList.add('active');
-    displayProducts(e.target.dataset.category);
-  });
-});
-
-// File Upload Logic using FileReader
-document.getElementById('productForm').addEventListener('submit', (e) => {
-  e.preventDefault();
-  
-  const fileInput = document.getElementById('pImageFile');
-  const file = fileInput.files[0];
-
-  if (!file) {
-    alert('Please select an image file!');
-    return;
-  }
-
-  const reader = new FileReader();
-  reader.onload = function(event) {
-    const imageDataUrl = event.target.result;
-
-    const newItem = {
-      id: Date.now(),
-      name: document.getElementById('pName').value,
-      category: document.getElementById('pCategory').value,
-      price: document.getElementById('pPrice').value,
-      image: imageDataUrl,
-      desc: document.getElementById('pDesc').value
-    };
-
-    const list = fetchProducts();
-    list.unshift(newItem);
-    saveProducts(list);
-    displayProducts();
-    e.target.reset();
-    alert('Product image and details uploaded successfully!');
-  };
-
-  reader.readAsDataURL(file);
-});
-
-function showModal(id) {
-  const item = fetchProducts().find(p => p.id === id);
-  if (!item) return;
-
-  const content = document.getElementById('modalContent');
-  content.innerHTML = `
-    <h2 style="color: #0b2545; margin-bottom: 10px;">${item.name}</h2>
-    <img src="${item.image}" style="width: 100%; height: 220px; object-fit: cover; border-radius: 4px; margin-bottom: 15px;" onerror="this.src='https://via.placeholder.com/400x250?text=M.R.+TEX'">
-    <p><strong>Category:</strong> ${item.category.toUpperCase()}</p>
-    <p><strong>Pricing:</strong> ${item.price}</p>
-    <p style="margin-top: 10px;"><strong>Specifications:</strong><br>${item.desc}</p>
-    <div style="margin-top: 20px;">
-      <a href="https://wa.me/8801911677701?text=Hi%20M.R.%20TEX,%20I%20need%20details%20for%20${encodeURIComponent(item.name)}" class="btn btn-wa" target="_blank">
-        <i class="fab fa-whatsapp"></i> Direct WhatsApp Inquiry
-      </a>
-    </div>
-  `;
-  document.getElementById('itemModal').style.display = 'flex';
+.logo {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #38bdf8;
 }
 
-document.querySelector('.modal-close').onclick = () => {
-  document.getElementById('itemModal').style.display = 'none';
-};
+nav a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 1.5rem;
+  font-weight: 500;
+  transition: color 0.3s;
+}
 
-window.onclick = (e) => {
-  if (e.target === document.getElementById('itemModal')) {
-    document.getElementById('itemModal').style.display = 'none';
-  }
-};
+nav a:hover {
+  color: #38bdf8;
+}
 
-document.getElementById('inquiryForm').addEventListener('submit', (e) => {
-  e.preventDefault();
-  alert('Thank you for contacting M.R. TEX! We will respond shortly.');
-  e.target.reset();
-});
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 4rem 1rem;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: #fff;
+}
 
-displayProducts();
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero p {
+  color: #94a3b8;
+  font-size: 1.1rem;
+}
+
+/* Catalog Sections */
+.catalog-section {
+  max-width: 1100px;
+  margin: 3rem auto;
+  padding: 0 1.5rem;
+}
+
+.catalog-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  border-left: 5px solid #0284c7;
+  padding-left: 0.8rem;
+}
+
+/* Grid Layout */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+/* Touch & Hover Animation Card */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.img-container {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.card-info {
+  padding: 1.5rem;
+}
+
+.card-info h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  color: #0f172a;
+}
+
+.card-info p {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.btn {
+  background-color: #0284c7;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn:hover {
+  background-color: #0369a1;
+}
+
+/* Hover / Touch Active State Animation */
+.card:hover, .card.active-touch {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card:hover img, .card.active-touch img {
+  transform: scale(1.08);
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 2rem;
+  background: #0f172a;
+  color: #64748b;
+  margin-top: 4rem;
+}
