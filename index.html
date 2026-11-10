@@ -1,93 +1,54 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>M.R.TEX - Industrial Textile Machinery & Accessories</title>
+  <title>Upload Product - M.R.TEX</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Header Section -->
-  <header class="header">
-    <div class="logo">M.R.TEX</div>
-    <nav>
-      <a href="#machines">Machinery</a>
-      <a href="#accessories">Accessories</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
+  <div class="form-container">
+    <h2>Upload Product</h2>
+    <p class="subtitle">Add new machinery photos and technical details to your live catalog</p>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <h1>Welcome to M.R.TEX</h1>
-    <p>Leading Supplier of Industrial Textile Machinery & Spare Parts</p>
-  </section>
-
-  <!-- Machines Section -->
-  <section id="machines" class="catalog-section">
-    <h2>Textile Machinery</h2>
-    <div class="grid-container">
+    <form id="uploadForm">
       
-      <div class="card interactive-card">
-        <div class="img-container">
-          <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80" alt="Knitting Machine">
-        </div>
-        <div class="card-info">
-          <h3>Circular Knitting Machine</h3>
-          <p>High-speed industrial knitting machinery for premium fabric production.</p>
-          <button class="btn">View Details</button>
-        </div>
+      <div class="form-group">
+        <label for="productName">Product Name *</label>
+        <input type="text" id="productName" placeholder="e.g., High Speed Single Jersey Machine" required>
       </div>
 
-      <div class="card interactive-card">
-        <div class="img-container">
-          <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80" alt="Auto Stripe Machine">
-        </div>
-        <div class="card-info">
-          <h3>Auto Stripe Machine</h3>
-          <p>Precision automatic stripe machine with smart control systems.</p>
-          <button class="btn">View Details</button>
-        </div>
+      <div class="form-group">
+        <label for="category">Category *</label>
+        <select id="category" required>
+          <option value="" disabled selected>Select Category</option>
+          <option value="Single Jersey">Single Jersey</option>
+          <option value="Double Jersey">Double Jersey</option>
+          <option value="Auto Stripe">Auto Stripe</option>
+          <option value="Accessories">Accessories & Spare Parts</option>
+        </select>
       </div>
 
-    </div>
-  </section>
-
-  <!-- Accessories Section -->
-  <section id="accessories" class="catalog-section">
-    <h2>Machine Accessories & Spare Parts</h2>
-    <div class="grid-container">
-
-      <div class="card interactive-card">
-        <div class="img-container">
-          <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80" alt="Timing Belt">
-        </div>
-        <div class="card-info">
-          <h3>Industrial Timing Belts</h3>
-          <p>Durable, high-tensile drive belts for seamless operation.</p>
-          <button class="btn">View Details</button>
-        </div>
+      <div class="form-group">
+        <label for="price">Price / Quote *</label>
+        <input type="text" id="price" placeholder="e.g., Contact for Quote / $15,000" required>
       </div>
 
-      <div class="card interactive-card">
-        <div class="img-container">
-          <img src="https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=600&q=80" alt="Yarn Feeders">
-        </div>
-        <div class="card-info">
-          <h3>Yarn Feeders & Rollers</h3>
-          <p>Precision-engineered feeders designed for uniform tension.</p>
-          <button class="btn">View Details</button>
-        </div>
+      <div class="form-group">
+        <label for="productImage">Upload Image (JPG/PNG) *</label>
+        <input type="file" id="productImage" accept="image/png, image/jpeg" required>
       </div>
 
-    </div>
-  </section>
+      <div class="form-group">
+        <label for="specifications">Specifications / Description *</label>
+        <textarea id="specifications" rows="4" placeholder="Gauge, Diameter, Feeders count, Speed RPM details..." required></textarea>
+      </div>
 
-  <!-- Footer Section -->
-  <footer id="contact">
-    <p>&copy; 2026 M.R.TEX. All Rights Reserved.</p>
-  </footer>
+      <button type="submit" class="submit-btn">Publish Product</button>
+
+    </form>
+  </div>
 
   <script src="script.js"></script>
 </body>
