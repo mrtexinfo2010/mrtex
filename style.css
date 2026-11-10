@@ -185,15 +185,23 @@ body {
   font-size: 0.95rem;
 }
 
+/* File Input Styling */
+input[type="file"] {
+  background-color: #f8fafc;
+  cursor: pointer;
+  padding: 8px;
+}
+
 /* Image Preview Styling */
 .image-preview-box {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-top: 8px;
+  margin-top: 6px;
   padding: 6px;
   border: 1px solid #e2e8f0;
   border-radius: 6px;
+  background: #f8fafc;
 }
 
 .image-preview-box img {
