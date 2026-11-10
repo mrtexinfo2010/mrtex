@@ -32,6 +32,11 @@ const dashboardScreen = document.getElementById('dashboardScreen');
 const productForm = document.getElementById('productForm');
 const adminProductList = document.getElementById('adminProductList');
 const cancelEditBtn = document.getElementById('cancelEditBtn');
+const formImageFile = document.getElementById('formImageFile');
+const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+const imagePreview = document.getElementById('imagePreview');
+
+let currentBase64Image = "";
 
 // 1. Render Catalog Cards
 function renderCatalog() {
@@ -87,6 +92,20 @@ function saveLocal() {
   renderAdminList();
 }
 
+// Image File Selection & Preview Handler
+formImageFile.addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      currentBase64Image = evt.target.result;
+      imagePreview.src = currentBase64Image;
+      imagePreviewContainer.classList.remove('hidden');
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
 // 3. Password Verification (mrtex2025)
 loginBtn.addEventListener('click', () => {
   const enteredPassword = adminPasswordInput.value;
@@ -108,11 +127,16 @@ closeAdminBtn.addEventListener('click', () => adminModal.classList.remove('activ
 productForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const index = parseInt(document.getElementById('editIndex').value);
+
+  if (!currentBase64Image && index === -1) {
+    alert("Please select a product photo from your device!");
+    return;
+  }
   
   const newProduct = {
     name: document.getElementById('formName').value,
     category: document.getElementById('formCategory').value,
-    image: document.getElementById('formImage').value,
+    image: currentBase64Image || (index !== -1 ? products[index].image : ""),
     description: document.getElementById('formDescription').value,
     specs: document.getElementById('formSpecs').value
   };
@@ -121,11 +145,10 @@ productForm.addEventListener('submit', (e) => {
     products.push(newProduct);
   } else {
     products[index] = newProduct;
-    resetForm();
   }
 
   saveLocal();
-  productForm.reset();
+  resetForm();
 });
 
 // Edit Action
@@ -134,9 +157,13 @@ window.editProduct = function(index) {
   document.getElementById('editIndex').value = index;
   document.getElementById('formName').value = item.name;
   document.getElementById('formCategory').value = item.category;
-  document.getElementById('formImage').value = item.image;
   document.getElementById('formDescription').value = item.description;
   document.getElementById('formSpecs').value = item.specs;
+
+  // Set existing image preview
+  currentBase64Image = item.image;
+  imagePreview.src = item.image;
+  imagePreviewContainer.classList.remove('hidden');
 
   document.getElementById('saveProductBtn').innerText = "Update Product";
   cancelEditBtn.classList.remove('hidden');
@@ -156,6 +183,9 @@ cancelEditBtn.addEventListener('click', resetForm);
 function resetForm() {
   document.getElementById('editIndex').value = "-1";
   productForm.reset();
+  currentBase64Image = "";
+  imagePreview.src = "";
+  imagePreviewContainer.classList.add('hidden');
   document.getElementById('saveProductBtn').innerText = "Save / Update Product";
   cancelEditBtn.classList.add('hidden');
 }
